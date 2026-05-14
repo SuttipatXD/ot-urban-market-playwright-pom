@@ -1,0 +1,32 @@
+import { Locator, Page } from '@playwright/test';
+
+export abstract class BasePage {
+  protected readonly page: Page;
+
+  constructor(page: Page) {
+    this.page = page;
+  }
+
+  protected async waitForElement(locator: Locator, timeout = 5000): Promise<void> {
+    await locator.waitFor({ state: 'visible', timeout });
+  }
+
+  protected async waitForPageLoad(): Promise<void> {
+    await this.page.waitForLoadState('networkidle');
+  }
+
+  protected async clickElement(locator: Locator): Promise<void> {
+    await this.waitForElement(locator);
+    await locator.click();
+  }
+
+  protected async fillElement(locator: Locator, value: string): Promise<void> {
+    await this.waitForElement(locator);
+    await locator.fill(value);
+  }
+
+  protected async selectOption(locator: Locator, option: string): Promise<void> {
+    await this.clickElement(locator);
+    await this.page.getByRole('option', { name: option }).click();
+  }
+}
