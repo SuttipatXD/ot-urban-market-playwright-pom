@@ -27,11 +27,11 @@ export class TestDataFactory {
 
   static createValidPage3Data(overrides: Partial<Page3Data> = {}): Page3Data {
     return {
-      title: 'นาย',
-      fullName: 'ทดสอบ ระบบ',
-      nationalId: '2523058445221', // NOTE: replace with valid 13-digit Thai ID for real testing
-      phone: '0993928695',
-      postalCode: '10160',
+      title: 'นางสาว',
+      fullName: 'ณัฐกาญจน์ แก้วแกมแข',
+      nationalId: '1679800286571',
+      phone: '0913932648',
+      postalCode: '10240',
       occupation: 'พนักงานบริษัท',
       age: 25,
       ...overrides,

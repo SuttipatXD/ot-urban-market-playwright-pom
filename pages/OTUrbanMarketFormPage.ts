@@ -41,6 +41,7 @@ export class OTUrbanMarketFormPage {
   }
 
   async clickSubmit(): Promise<void> {
+    await this.btnSubmit.scrollIntoViewIfNeeded();
     await this.btnSubmit.click();
     await this.page.waitForLoadState('networkidle');
   }

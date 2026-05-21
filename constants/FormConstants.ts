@@ -13,5 +13,5 @@ export const FORM_CONSTANTS = {
 } as const;
 
 export const FORM_URLS = {
-  REGISTRATION: 'https://forms.office.com/pages/responsepage.aspx?id=H6Uzjjv8NEKFcXd_n6BcKXaW6jJ9klBJkXu-E-UI-RdUMDI1TTBCNUVYQkRTRzdLRVJQMjlVMjNORi4u&route=shorturl',
+  REGISTRATION: 'https://forms.office.com/r/bep9t0hFG4',
 } as const;

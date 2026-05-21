@@ -40,11 +40,11 @@ export class Page2Section extends BasePage {
   }
 
   async fill(data: Page2Data): Promise<void> {
-    await (data.acceptTerms ? this.rdoAcceptTerms : this.rdoNotReadTerms).check();
-    await (data.pdpaConsent ? this.rdoPdpaConsent : this.rdoPdpaNotConsent).check();
-    await (data.poleConsent ? this.rdoPoleConsent : this.rdoPoleNotConsent).check();
-    await (data.penaltyConsent ? this.rdoPenaltyConsent : this.rdoPenaltyNotConsent).check();
-    await (data.preferredDay === 'wednesday' ? this.rdoWednesday : this.rdoTuesday).check();
+    await this.checkElement(data.acceptTerms ? this.rdoAcceptTerms : this.rdoNotReadTerms);
+    await this.checkElement(data.pdpaConsent ? this.rdoPdpaConsent : this.rdoPdpaNotConsent);
+    await this.checkElement(data.poleConsent ? this.rdoPoleConsent : this.rdoPoleNotConsent);
+    await this.checkElement(data.penaltyConsent ? this.rdoPenaltyConsent : this.rdoPenaltyNotConsent);
+    await this.checkElement(data.preferredDay === 'wednesday' ? this.rdoWednesday : this.rdoTuesday);
   }
 
   async validateRequiredFields(): Promise<boolean> {

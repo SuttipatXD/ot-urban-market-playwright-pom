@@ -35,21 +35,21 @@ export class Page3Section extends BasePage {
 
   async fill(data: Page3Data): Promise<void> {
     await this.selectTitle(data.title);
-    await this.txtFullName.fill(data.fullName);
-    await this.txtNationalId.fill(data.nationalId);
-    await this.txtPhone.fill(data.phone);
-    await this.txtPostalCode.fill(data.postalCode);
+    await this.fillElement(this.txtFullName, data.fullName);
+    await this.fillElement(this.txtNationalId, data.nationalId);
+    await this.fillElement(this.txtPhone, data.phone);
+    await this.fillElement(this.txtPostalCode, data.postalCode);
     await this.selectOccupation(data.occupation);
-    await this.txtAge.fill(String(data.age));
+    await this.fillElement(this.txtAge, String(data.age));
   }
 
   async selectTitle(title: string): Promise<void> {
-    await this.ddlTitle.click();
+    await this.clickElement(this.ddlTitle);
     await this.page.getByRole('option', { name: title }).click();
   }
 
   async selectOccupation(occupation: string): Promise<void> {
-    await this.ddlOccupation.click();
+    await this.clickElement(this.ddlOccupation);
     await this.page.getByRole('option', { name: occupation }).click();
   }
 

@@ -114,9 +114,9 @@ export class Page1Section extends BasePage {
       everyMonth: this.rdoEveryMonth,
     };
 
-    await sourceMap[data.source].check();
-    await visitMap[data.visitFrequency].check();
-    await sellMap[data.sellFrequency].check();
+    await this.checkElement(sourceMap[data.source]);
+    await this.checkElement(visitMap[data.visitFrequency]);
+    await this.checkElement(sellMap[data.sellFrequency]);
     await this.selectSatisfactionRating(data.satisfaction);
   }
 
@@ -128,7 +128,7 @@ export class Page1Section extends BasePage {
       this.ratingHeart4,
       this.ratingHeart5,
     ];
-    await hearts[rating - 1].click();
+    await this.clickElement(hearts[rating - 1]);
   }
 
   async validateRequiredFields(): Promise<boolean> {

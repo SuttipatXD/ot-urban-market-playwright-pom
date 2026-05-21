@@ -17,12 +17,20 @@ export abstract class BasePage {
 
   protected async clickElement(locator: Locator): Promise<void> {
     await this.waitForElement(locator);
+    await locator.scrollIntoViewIfNeeded();
     await locator.click();
   }
 
   protected async fillElement(locator: Locator, value: string): Promise<void> {
     await this.waitForElement(locator);
+    await locator.scrollIntoViewIfNeeded();
     await locator.fill(value);
+  }
+
+  protected async checkElement(locator: Locator): Promise<void> {
+    await this.waitForElement(locator);
+    await locator.scrollIntoViewIfNeeded();
+    await locator.check();
   }
 
   protected async selectOption(locator: Locator, option: string): Promise<void> {
