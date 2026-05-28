@@ -9,19 +9,19 @@
 ```
 ot-urban-market-playwright-pom/
 ├── constants/
-│   └── FormConstants.ts           # URL, timeouts, validation limits, max selections
+│   └── FormConstants.ts   # URL, timeouts, validation limits, max selections
 ├── data/
-│   └── TestDataFactory.ts         # Factory methods สร้าง test data แต่ละหน้า
+│   └── TestDataFactory.ts # Factory methods สร้าง test data แต่ละหน้า
 ├── pages/
-│   ├── BasePage.ts                # Abstract base — helper methods (click, fill, wait)
-│   ├── OTUrbanMarketFormPage.ts   # Orchestrator — compose Page1–4, clickNext, Submit
-│   ├── OTUrbanMarketPage1.ts      # Page 1: แหล่งที่รู้จัก / ความถี่เข้า-ขาย / rating
-│   ├── OTUrbanMarketPage2.ts      # Page 2: เงื่อนไข / PDPA / วันขาย
-│   ├── OTUrbanMarketPage3.ts      # Page 3: ข้อมูลส่วนตัว (ชื่อ, บัตรปชช., โทร ฯลฯ)
-│   └── OTUrbanMarketPage4.ts      # Page 4: ประเภทสินค้า (เลือกได้สูงสุด 2)
+│   ├── BasePage.ts        # Abstract base — helper methods (click, fill, wait, isAnyChecked)
+│   ├── FormPage.ts        # Orchestrator — compose Page1–4, clickNext, Submit
+│   ├── Page1.ts           # Page 1: แหล่งที่รู้จัก / ความถี่เข้า-ขาย / rating
+│   ├── Page2.ts           # Page 2: เงื่อนไข / PDPA / วันขาย
+│   ├── Page3.ts           # Page 3: ข้อมูลส่วนตัว (ชื่อ, บัตรปชช., โทร ฯลฯ)
+│   └── Page4.ts           # Page 4: ประเภทสินค้า (เลือกได้สูงสุด 2)
 ├── tests/
-│   └── otUrbanMarketForm.spec.ts  # Test cases TC01–TC07 + Data-Driven TC06
-├── playwright.config.ts           # Config: chromium / firefox / mobile-chrome
+│   └── form.spec.ts       # Test cases TC01–TC07 + Data-Driven TC06
+├── playwright.config.ts   # Config: chromium
 ├── package.json
 ├── tsconfig.json
 └── README.md
@@ -84,14 +84,14 @@ npm run codegen         # บันทึก test ใหม่จาก browser
 ### Page Object Model
 
 ```
-OTUrbanMarketFormPage (Orchestrator)
+FormPage (Orchestrator)
 ├── Page1Section  → fill(), selectSatisfactionRating(), validateRequiredFields()
 ├── Page2Section  → fill(), validateRequiredFields()
 ├── Page3Section  → fill(), selectTitle(), selectOccupation(), validateRequiredFields()
 └── Page4Section  → fill(), validateRequiredFields()
 ```
 
-- **BasePage** จัดการ `waitFor`, `clickElement`, `fillElement`, `selectOption` รวมศูนย์
+- **BasePage** จัดการ `waitFor`, `clickElement`, `fillElement`, `selectOption`, `isAnyChecked` รวมศูนย์
 - **TestDataFactory** สร้าง test data ผ่าน static factory methods พร้อม `overrides` pattern
 - **FormConstants** เก็บ URL, timeout, และ business rule (เช่น `MAX_PRODUCT_TYPES = 2`) ไว้ที่เดียว
 
@@ -109,10 +109,8 @@ OTUrbanMarketFormPage (Orchestrator)
 | Project | Config |
 |---------|--------|
 | chromium | Desktop Chrome |
-| firefox | Desktop Firefox |
-| mobile-chrome | Pixel 5 (Playwright device emulation) |
 
-- `retries: 1` — retry อัตโนมัติ 1 ครั้งเมื่อ fail
+- `retries: 0` — ไม่ retry อัตโนมัติ
 - `fullyParallel: false` — รัน sequential (form มี shared state)
 - `locale: 'th-TH'` — ภาษาไทย
 - Artifact (screenshot / video / trace) บันทึกเฉพาะเมื่อ test fail
