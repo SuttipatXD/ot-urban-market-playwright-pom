@@ -60,26 +60,26 @@ export class Page1Section extends BasePage {
   constructor(page: Page) {
     super(page);
 
-    this.chkXUnionMall = page.getByLabel('X Union Mall');
-    this.chkFacebookUnionMall = page.getByLabel('Facebook Union Mall');
-    this.chkTikTokUnionMall = page.getByLabel('TikTok Union Mall');
-    this.chkInstagramUnionMall = page.getByLabel('Instagram Union Mall');
-    this.chkFriend = page.getByLabel('เพื่อน / คนรู้จัก');
-    this.chkTikTokInfluencer = page.getByLabel('TikTok influencer');
-    this.chkXInfluencer = page.getByLabel('X influencer');
-    this.chkFacebookInfluencer = page.getByLabel('Facebook influencer');
-    this.chkWalkby = page.getByLabel('ผ่านมาเจอ');
+    this.chkXUnionMall = page.getByRole('checkbox', { name: 'X Union Mall' });
+    this.chkFacebookUnionMall = page.getByRole('checkbox', { name: 'Facebook Union Mall' });
+    this.chkTikTokUnionMall = page.getByRole('checkbox', { name: 'TikTok Union Mall' });
+    this.chkInstagramUnionMall = page.getByRole('checkbox', { name: 'Instagram Union Mall' });
+    this.chkFriend = page.getByRole('checkbox', { name: 'เพื่อน / คนรู้จัก' });
+    this.chkTikTokInfluencer = page.getByRole('checkbox', { name: 'TikTok influencer' });
+    this.chkXInfluencer = page.getByRole('checkbox', { name: 'X influencer' });
+    this.chkFacebookInfluencer = page.getByRole('checkbox', { name: 'Facebook influencer' });
+    this.chkWalkby = page.getByRole('checkbox', { name: 'ผ่านมาเจอ' });
 
-    this.rdoMoreThanOncePerMonth = page.getByLabel('มากกว่า 1 ครั้งต่อเดือน');
-    this.rdoOncePerMonth = page.getByLabel('1 เดือน 1 ครั้ง');
-    this.rdoOncePerThreeMonths = page.getByLabel('3 เดือน 1 ครั้ง');
-    this.rdoOncePerSixMonths = page.getByLabel('6 เดือน 1 ครั้ง');
-    this.rdoOncePerYear = page.getByLabel('1 ปี 1 ครั้ง');
+    this.rdoMoreThanOncePerMonth = page.getByRole('radio', { name: 'มากกว่า 1 ครั้งต่อเดือน' });
+    this.rdoOncePerMonth = page.getByRole('radio', { name: '1 เดือน 1 ครั้ง', exact: true });
+    this.rdoOncePerThreeMonths = page.getByRole('radio', { name: '3 เดือน 1 ครั้ง', exact: true });
+    this.rdoOncePerSixMonths = page.getByRole('radio', { name: '6 เดือน 1 ครั้ง', exact: true });
+    this.rdoOncePerYear = page.getByRole('radio', { name: '1 ปี 1 ครั้ง', exact: true });
 
-    this.rdoNever = page.getByLabel('ไม่เคยเลย');
-    this.rdoOnce = page.getByLabel('1 ครั้ง');
-    this.rdoMoreThanTwicePerMonth = page.getByLabel('มากกว่า 2 ครั้ง ต่อเดือน');
-    this.rdoEveryMonth = page.getByLabel('ทุกเดือน');
+    this.rdoNever = page.getByRole('radio', { name: 'ไม่เคยเลย', exact: true });
+    this.rdoOnce = page.getByRole('radio', { name: '1 ครั้ง', exact: true });
+    this.rdoMoreThanTwicePerMonth = page.getByRole('radio', { name: 'มากกว่า 2 ครั้ง ต่อเดือน' });
+    this.rdoEveryMonth = page.getByRole('radio', { name: 'ทุกเดือน', exact: true });
 
     this.ratingHeart1 = page.getByRole('radio', { name: '1 Heart' });
     this.ratingHeart2 = page.getByRole('radio', { name: '2 Heart' });
@@ -133,72 +133,25 @@ export class Page1Section extends BasePage {
 
   async validateRequiredFields(): Promise<boolean> {
     try {
-      // Check if at least one source is selected
-      const sources = [
-        this.chkXUnionMall,
-        this.chkFacebookUnionMall,
-        this.chkTikTokUnionMall,
-        this.chkInstagramUnionMall,
-        this.chkFriend,
-        this.chkTikTokInfluencer,
-        this.chkXInfluencer,
-        this.chkFacebookInfluencer,
-        this.chkWalkby,
+      const allSources = [
+        this.chkXUnionMall, this.chkFacebookUnionMall, this.chkTikTokUnionMall,
+        this.chkInstagramUnionMall, this.chkFriend, this.chkTikTokInfluencer,
+        this.chkXInfluencer, this.chkFacebookInfluencer, this.chkWalkby,
       ];
-
-      const sourceSelected = await Promise.all(
-        sources.map(async (source) => await source.isChecked())
-      );
-
-      const hasSourceSelected = sourceSelected.some(Boolean);
-
-      // Check if visit frequency is selected
       const visitFrequencies = [
-        this.rdoMoreThanOncePerMonth,
-        this.rdoOncePerMonth,
-        this.rdoOncePerThreeMonths,
-        this.rdoOncePerSixMonths,
-        this.rdoOncePerYear,
+        this.rdoMoreThanOncePerMonth, this.rdoOncePerMonth,
+        this.rdoOncePerThreeMonths, this.rdoOncePerSixMonths, this.rdoOncePerYear,
       ];
+      const sellFrequencies = [this.rdoNever, this.rdoOnce, this.rdoMoreThanTwicePerMonth, this.rdoEveryMonth];
+      const hearts = [this.ratingHeart1, this.ratingHeart2, this.ratingHeart3, this.ratingHeart4, this.ratingHeart5];
 
-      const visitSelected = await Promise.all(
-        visitFrequencies.map(async (freq) => await freq.isChecked())
+      return (
+        await this.isAnyChecked(allSources) &&
+        await this.isAnyChecked(visitFrequencies) &&
+        await this.isAnyChecked(sellFrequencies) &&
+        await this.isAnyChecked(hearts)
       );
-
-      const hasVisitSelected = visitSelected.some(Boolean);
-
-      // Check if sell frequency is selected
-      const sellFrequencies = [
-        this.rdoNever,
-        this.rdoOnce,
-        this.rdoMoreThanTwicePerMonth,
-        this.rdoEveryMonth,
-      ];
-
-      const sellSelected = await Promise.all(
-        sellFrequencies.map(async (freq) => await freq.isChecked())
-      );
-
-      const hasSellSelected = sellSelected.some(Boolean);
-
-      // Check if satisfaction rating is selected
-      const ratings = [
-        this.ratingHeart1,
-        this.ratingHeart2,
-        this.ratingHeart3,
-        this.ratingHeart4,
-        this.ratingHeart5,
-      ];
-
-      const ratingSelected = await Promise.all(
-        ratings.map(async (rating) => await rating.isChecked())
-      );
-
-      const hasRatingSelected = ratingSelected.some(Boolean);
-
-      return hasSourceSelected && hasVisitSelected && hasSellSelected && hasRatingSelected;
-    } catch (error) {
-      console.error('Error validating Page 1 fields:', error);
+    } catch {
       return false;
     }
   }

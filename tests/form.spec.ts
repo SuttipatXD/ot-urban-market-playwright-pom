@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { OTUrbanMarketFormPage } from '../pages/OTUrbanMarketFormPage';
+import { OTUrbanMarketFormPage } from '../pages/FormPage';
 import { TestDataFactory } from '../data/TestDataFactory';
 import { FORM_CONSTANTS } from '../constants/FormConstants';
 

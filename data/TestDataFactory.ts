@@ -1,7 +1,7 @@
-import { Page1Data } from '../pages/OTUrbanMarketPage1';
-import { Page2Data } from '../pages/OTUrbanMarketPage2';
-import { Page3Data } from '../pages/OTUrbanMarketPage3';
-import { ProductType } from '../pages/OTUrbanMarketPage4';
+import { Page1Data } from '../pages/Page1';
+import { Page2Data } from '../pages/Page2';
+import { Page3Data } from '../pages/Page3';
+import { ProductType } from '../pages/Page4';
 
 export class TestDataFactory {
   static createValidPage1Data(overrides: Partial<Page1Data> = {}): Page1Data {

@@ -13,5 +13,5 @@ export const FORM_CONSTANTS = {
 } as const;
 
 export const FORM_URLS = {
-  REGISTRATION: 'https://forms.office.com/r/bep9t0hFG4',
+  REGISTRATION: 'https://forms.office.com/r/73EyzFwcFj',
 } as const;

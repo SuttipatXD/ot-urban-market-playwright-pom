@@ -11,7 +11,7 @@ export default defineConfig({
     ['junit', { outputFile: 'test-results/junit.xml' }],
   ],
   use: {
-    baseURL: 'https://forms.office.com',
+    baseURL: 'https://forms.office.com/r/73EyzFwcFj',
     headless: false,
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',

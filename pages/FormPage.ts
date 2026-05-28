@@ -1,9 +1,9 @@
 import { Page } from '@playwright/test';
-import { Page1Section, Page1Data } from './OTUrbanMarketPage1';
-import { Page2Section, Page2Data } from './OTUrbanMarketPage2';
-import { Page3Section, Page3Data } from './OTUrbanMarketPage3';
-import { Page4Section, ProductType } from './OTUrbanMarketPage4';
-import { FORM_URLS, FORM_CONSTANTS } from '../constants/FormConstants';
+import { Page1Section, Page1Data } from './Page1';
+import { Page2Section, Page2Data } from './Page2';
+import { Page3Section, Page3Data } from './Page3';
+import { Page4Section, ProductType } from './Page4';
+import { FORM_URLS } from '../constants/FormConstants';
 
 export class OTUrbanMarketFormPage {
   readonly page: Page;
@@ -22,8 +22,16 @@ export class OTUrbanMarketFormPage {
     this.page4 = new Page4Section(page);
   }
 
+  get btnNextTo() {
+    return this.page.getByRole('button', { name: 'ถัดไป' });
+  }
+
   get btnNext() {
     return this.page.getByRole('button', { name: 'Next' });
+  }
+
+  get btnSubmitTh() {
+    return this.page.getByRole('button', { name: 'ส่ง' });
   }
 
   get btnSubmit() {
@@ -31,19 +39,22 @@ export class OTUrbanMarketFormPage {
   }
 
   async goto(): Promise<void> {
-    await this.page.goto(this.url);
-    await this.page.waitForLoadState('networkidle');
+    await this.page.goto(this.url, { waitUntil: 'domcontentloaded' });
+    await this.page1.chkXUnionMall.waitFor({ state: 'visible', timeout: 30_000 });
   }
 
   async clickNext(): Promise<void> {
-    await this.btnNext.click();
-    await this.page.waitForLoadState('networkidle');
+    const isThaiBtn = await this.btnNextTo.isVisible();
+    await (isThaiBtn ? this.btnNextTo : this.btnNext).click();
+    await this.page.waitForTimeout(1_500);
   }
 
   async clickSubmit(): Promise<void> {
-    await this.btnSubmit.scrollIntoViewIfNeeded();
-    await this.btnSubmit.click();
-    await this.page.waitForLoadState('networkidle');
+    const isThaiBtn = await this.btnSubmitTh.isVisible();
+    const btn = isThaiBtn ? this.btnSubmitTh : this.btnSubmit;
+    await btn.scrollIntoViewIfNeeded();
+    await btn.click();
+    await this.page.waitForLoadState('load');
   }
 
   async isSubmitSuccess(): Promise<boolean> {

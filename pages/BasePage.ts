@@ -7,7 +7,7 @@ export abstract class BasePage {
     this.page = page;
   }
 
-  protected async waitForElement(locator: Locator, timeout = 5000): Promise<void> {
+  protected async waitForElement(locator: Locator, timeout = 15_000): Promise<void> {
     await locator.waitFor({ state: 'visible', timeout });
   }
 
@@ -36,5 +36,10 @@ export abstract class BasePage {
   protected async selectOption(locator: Locator, option: string): Promise<void> {
     await this.clickElement(locator);
     await this.page.getByRole('option', { name: option }).click();
+  }
+
+  protected async isAnyChecked(locators: Locator[]): Promise<boolean> {
+    const results = await Promise.all(locators.map(l => l.isChecked()));
+    return results.some(Boolean);
   }
 }

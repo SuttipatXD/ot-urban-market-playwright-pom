@@ -22,12 +22,12 @@ export class Page4Section extends BasePage {
   constructor(page: Page) {
     super(page);
 
-    this.chkUsedToys = page.getByLabel('ของเล่นมือสอง');
-    this.chkDIY = page.getByLabel('สินค้า D.I.Y');
-    this.chkUsedDecor = page.getByLabel('ของแต่งบ้านมือสอง/ของใช้');
-    this.chkHomemadeSnack = page.getByLabel('ขนมโฮมเมด');
-    this.chkUsedClothes = page.getByLabel('เสื้อผ้ามือสอง');
-    this.chkCollectibles = page.getByLabel('ของสะสม');
+    this.chkUsedToys = page.getByRole('checkbox', { name: 'ของเล่นมือสอง' });
+    this.chkDIY = page.getByRole('checkbox', { name: 'สินค้า D.I.Y' });
+    this.chkUsedDecor = page.getByRole('checkbox', { name: 'ของแต่งบ้านมือสอง/ของใช้' });
+    this.chkHomemadeSnack = page.getByRole('checkbox', { name: 'ขนมโฮมเมด' });
+    this.chkUsedClothes = page.getByRole('checkbox', { name: 'เสื้อผ้ามือสอง' });
+    this.chkCollectibles = page.getByRole('checkbox', { name: 'ของสะสม' });
   }
 
   async fill(types: ProductType[]): Promise<void> {
@@ -53,27 +53,13 @@ export class Page4Section extends BasePage {
 
   async validateRequiredFields(): Promise<boolean> {
     try {
-      // Page 4 allows 0 or more selections, so it's always valid
-      // But we can check if at least one is selected for business rules
-      const products = [
-        this.chkUsedToys,
-        this.chkDIY,
-        this.chkUsedDecor,
-        this.chkHomemadeSnack,
-        this.chkUsedClothes,
-        this.chkCollectibles,
+      const allProducts = [
+        this.chkUsedToys, this.chkDIY, this.chkUsedDecor,
+        this.chkHomemadeSnack, this.chkUsedClothes, this.chkCollectibles,
       ];
-
-      const productSelected = await Promise.all(
-        products.map(async (product) => await product.isChecked())
-      );
-
-      const selectedCount = productSelected.filter(Boolean).length;
-
-      // Business rule: maximum 2 products can be selected
-      return selectedCount <= FORM_CONSTANTS.MAX_PRODUCT_TYPES;
-    } catch (error) {
-      console.error('Error validating Page 4 fields:', error);
+      const checked = await Promise.all(allProducts.map(p => p.isChecked()));
+      return checked.filter(Boolean).length <= FORM_CONSTANTS.MAX_PRODUCT_TYPES;
+    } catch {
       return false;
     }
   }
