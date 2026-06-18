@@ -51,7 +51,7 @@ test.describe('O.T. URBAN MARKET — Registration Form E2E (POM)', () => {
     test('TC03 - เลือกวันอังคารเป็นวันขาย', async () => {
       await form.page1.fill(TestDataFactory.createValidPage1Data({ source: 'Facebook' }));
       await form.clickNext();
-      await form.page2.fill(TestDataFactory.createValidPage2Data({ preferredDay: 'tuesday' }));
+      await form.page2.fill({ ...testData.page2, preferredDay: 'tuesday' });
       await expect(form.page2.rdoTuesday).toBeChecked();
     });
 
@@ -113,39 +113,3 @@ test.describe('O.T. URBAN MARKET — Registration Form E2E (POM)', () => {
     }
   });
 });
-
-
-// test('test', async ({ page }) => {
-//   await page.goto('https://forms.office.com/pages/responsepage.aspx?id=H6Uzjjv8NEKFcXd_n6BcKXaW6jJ9klBJkXu-E-UI-RdUQVBSWjM4M1ZVMzRLUVBaNFdYUUFIMjRHVy4u&route=shorturl');
-//   await page.getByRole('checkbox', { name: 'ผ่านมาเจอ' }).check();
-//   await page.getByRole('radio', { name: '1 เดือน 1 ครั้ง' }).check();
-//   await page.getByText('ไม่เคยเลย1 ครั้งมากกว่า 2').click();
-//   await page.getByRole('radio', { name: '1 ครั้ง', exact: true }).check();
-//   await page.getByRole('radio', { name: '1 ครั้ง', exact: true }).check();
-//   await page.getByRole('radio', { name: '5 Heart' }).click();
-//   await page.getByRole('button', { name: 'Next' }).click();
-//   await page.getByRole('radio', { name: 'ได้อ่านและเข้าใจเงื่อนไขทั้งหมดแล้ว' }).check();
-//   await page.getByRole('radio', { name: 'ยินยอม', exact: true }).check();
-//   await page.getByLabel('ยินยอมในการขายในพื้นที่บริเวณล็อกที่ติดเสาหรือไม่Single choice.').getByRole('radio', { name: 'ยินยอม', exact: true }).check();
-//   await page.getByLabel('8').getByRole('radio', { name: 'ยินยอม', exact: true }).check();
-//   await page.getByRole('radio', { name: 'วันพุธ' }).check();
-//   await page.getByRole('button', { name: 'Next' }).click();
-//   await page.getByRole('button', { name: 'คำนำหน้าชื่อRequired to answer' }).click();
-//   await page.getByRole('option', { name: 'นาย' }).click();
-//   await page.getByRole('textbox', { name: '11' }).click();
-//   await page.getByRole('textbox', { name: '11' }).fill('ทดสอบ');
-//   await page.getByRole('textbox', { name: '12. เลขบัตรประชาชนRequired to' }).click();
-//   await page.getByRole('textbox', { name: '12. เลขบัตรประชาชนRequired to' }).fill('1212121212333');
-//   await page.getByRole('textbox', { name: '13. เบอร์โทรRequired to' }).click();
-//   await page.getByRole('textbox', { name: '13. เบอร์โทรRequired to' }).fill('0999999990');
-//   await page.getByRole('textbox', { name: '14' }).click();
-//   await page.getByRole('textbox', { name: '14' }).fill('10160');
-//   await page.getByRole('button', { name: 'อาชีพRequired to answer' }).click();
-//   await page.getByRole('option', { name: 'พนักงานบริษัท' }).click();
-//   await page.getByRole('textbox', { name: 'อายุRequired to answer' }).click();
-//   await page.getByRole('textbox', { name: 'อายุRequired to answer' }).fill('25');
-//   await page.getByRole('button', { name: 'Next' }).click();
-//   await page.getByRole('checkbox', { name: 'เสื้อผ้ามือสอง' }).check();
-//   await page.getByRole('checkbox', { name: 'ของแต่งบ้านมือสอง/ของใช้' }).check();
-//   await page.getByRole('button', { name: 'Submit' }).click();
-// });

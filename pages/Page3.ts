@@ -25,10 +25,10 @@ export class Page3Section extends BasePage {
     super(page);
 
     this.ddlTitle = page.getByRole('button', { name: /คำนำหน้าชื่อ/ });
-    this.txtFullName = page.getByRole('textbox', { name: /11/ });
+    this.txtFullName = page.getByRole('textbox', { name: /ชื่อ.*นามสกุล/ });
     this.txtNationalId = page.getByRole('textbox', { name: /เลขบัตรประชาชน/ });
     this.txtPhone = page.getByRole('textbox', { name: /เบอร์โทร/ });
-    this.txtPostalCode = page.getByRole('textbox', { name: /14/ });
+    this.txtPostalCode = page.getByRole('textbox', { name: /รหัสไปรษณีย์/ });
     this.ddlOccupation = page.getByRole('button', { name: /อาชีพ/ });
     this.txtAge = page.getByRole('textbox', { name: /อายุ/ });
   }
@@ -45,7 +45,7 @@ export class Page3Section extends BasePage {
 
   async selectTitle(title: string): Promise<void> {
     await this.clickElement(this.ddlTitle);
-    await this.page.getByRole('option', { name: title }).click();
+    await this.page.getByRole('option', { name: title, exact: true }).click();
   }
 
   async selectOccupation(occupation: string): Promise<void> {
@@ -64,7 +64,7 @@ export class Page3Section extends BasePage {
       const hasPostalCode = (await this.txtPostalCode.inputValue()).length >= 5;
       const hasOccupationSelected = isDropdownFilled(await this.ddlOccupation.innerText());
       const age = parseInt(await this.txtAge.inputValue(), 10);
-      const hasValidAge = !isNaN(age) && age > 0 && age <= 120;
+      const hasValidAge = !isNaN(age) && age >= 6 && age <= 99;
 
       return hasTitleSelected && hasFullName && hasValidNationalId && hasValidPhone &&
              hasPostalCode && hasOccupationSelected && hasValidAge;

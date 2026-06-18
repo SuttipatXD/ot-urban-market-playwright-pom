@@ -11,7 +11,7 @@
     "test:firefox": "playwright test --project=firefox",
     "test:mobile": "playwright test --project=mobile-chrome",
     "test:tc01": "playwright test --grep TC01",
-    "codegen": "playwright codegen https://forms.office.com/r/bep9t0hFG4"
+    "codegen": "playwright codegen https://forms.office.com/r/hPvVHUKgdF"
   },
   "devDependencies": {
     "@playwright/test": "^1.44.0",

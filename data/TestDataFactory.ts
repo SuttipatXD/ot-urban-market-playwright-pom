@@ -31,7 +31,7 @@ export class TestDataFactory {
       fullName: 'ณัฐกาญจน์ แก้วแกมแข',
       nationalId: '1679800286571',
       phone: '0913932648',
-      postalCode: '10240',
+      postalCode: '10310',
       occupation: 'พนักงานบริษัท',
       age: 25,
       ...overrides,
